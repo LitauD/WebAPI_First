@@ -1,0 +1,81 @@
+<div class="form-container">
+  <h2>Напишите нам</h2>
+  <form (ngSubmit)="onSubmit(contactForm)" #contactForm="ngForm" novalidate>
+    <label for="name">Ваше имя:</label>
+    <input type="text"
+           id="name"
+           name="name"
+           [(ngModel)]="model.name"
+           #name="ngModel"
+           required
+           placeholder="Введите ваше имя" />
+    <div *ngIf="name.invalid && name.touched" class="error">
+      Пожалуйста, введите имя.
+    </div>
+
+    <label for="email">Ваш Email:</label>
+    <!--проверка на уровне браузера-->
+    <input type="email"
+           id="email"
+           name="email"
+           [(ngModel)]="model.email"
+           #email="ngModel"
+           required
+           email
+           placeholder="Введите ваш email" />
+    <div *ngIf="email.invalid && email.touched" class="error">
+      <!--сообщение об ошибке покажется, если:
+     поле email невалидно (не соответствует ни обычному, ни angular-валидатору)
+      и пользователь уже взаимодействовал с этим полем (touched)-->
+      Пожалуйста, введите корректный email.
+    </div>
+
+    <label for="phone">Ваш телефон:</label>
+    <input type="tel"
+           id="phone"
+           name="phone"
+           [(ngModel)]="model.phone"
+           #phone="ngModel"
+           required
+           pattern="\d+"
+           placeholder="Введите телефон"
+           (input)="onPhoneInput()" />
+    <div *ngIf="phone.invalid && phone.touched" class="error">
+      Пожалуйста, введите телефон, состоящий только из цифр.
+    </div>
+
+    <label for="topic">Тема:</label>
+    <select id="topic"
+            name="topic"
+            [(ngModel)]="model.topic"
+            #topic="ngModel"
+            required>
+      <option value="">Выберите тему</option>
+      <option value="support">Техподдержка</option>
+      <option value="sales">Продажи</option>
+      <option value="other">Другое</option>
+      <option value="another">Еще один пункт</option>
+    </select>
+    <div *ngIf="topic.invalid && topic.touched" class="error">
+      Пожалуйста, выберите тему.
+    </div>
+
+    <label for="message">Ваше сообщение:</label>
+    <textarea id="message"
+              name="message"
+              [(ngModel)]="model.message"
+              #message="ngModel"
+              required
+              rows="4"
+              placeholder="Введите сообщение"></textarea>
+    <div *ngIf="message.invalid && message.touched" class="error">
+      Пожалуйста, введите сообщение.
+    </div>
+
+    <app-captcha (captchaVerified)="onCaptchaVerified($event)"></app-captcha>
+    <button type="submit" [disabled]="contactForm.invalid || !captchaValid">Отправить</button>
+
+    <!-- <button type="submit" [disabled]="contactForm.invalid"></button> -->
+  </form>
+
+  </div>

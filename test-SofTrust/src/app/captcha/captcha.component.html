@@ -1,0 +1,7 @@
+<div>
+  <p>Введите цифры: <strong>{{ captchaCode }}</strong></p>
+ <!-- <input type="text" [(ngModel)]="userInput" maxlength="6" /> -->
+  <input [(ngModel)]="userInput" placeholder="Введите код" />
+  <p><button (click)="checkCaptcha()">Отправить</button></p>
+  <p>{{ message }}</p>
+</div>
